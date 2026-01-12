@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EXO3 API</title>
+  </head>
+  <body>
+    <h1>EXO3 - API avec données fixes</h1>
+
+    <p id="resultat">Chargement...</p>
+
+    <script>
+      // Appel simple de l'API (sans paramètres)
+      fetch("/api/utilisateur")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById(
+            "resultat"
+          ).innerText = `Nom : ${data.nom} | Âge : ${data.age}`;
+        });
+    </script>
+  </body>
+</html>
