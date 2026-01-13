@@ -2,22 +2,16 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>EXO3 API</title>
+    <title>EXO4</title>
   </head>
   <body>
-    <h1>EXO3 - API avec données fixes</h1>
+    <h1>EXO4 – Paramètres GET</h1>
 
-    <p id="resultat">Chargement...</p>
-
-    <script>
-      // Appel simple de l'API (sans paramètres)
-      fetch("/api/utilisateur")
-        .then((response) => response.json())
-        .then((data) => {
-          document.getElementById(
-            "resultat"
-          ).innerText = `Nom : ${data.nom} | Âge : ${data.age}`;
-        });
-    </script>
+    {% if nom and age %}
+    <p>Nom : {{ nom }}</p>
+    <p>Âge : {{ age }}</p>
+    {% else %}
+    <p>Paramètres non fournis.</p>
+    {% endif %}
   </body>
 </html>

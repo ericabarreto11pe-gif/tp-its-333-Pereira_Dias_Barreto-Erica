@@ -9,7 +9,6 @@ def index():
 ### EXO3 - API with parameters display 
 @app.route('/api/utilisateur', methods=['GET'])
 def utilisateur():
-    # données FIXES dans le backend
     nom = "Erica"
     age = 23
 
@@ -28,12 +27,13 @@ if __name__ == '__main__':
 
 ### EXO4 - API with parameters retrieved from URL 
 
-@app.route('/api/utilisateur/<nom>/<int:age>', methods=['GET'])
-def utilisateur(nom, age):
-    return jsonify(
-        nom=nom,
-        age=age
-    )
+@app.route('/params')
+def params():
+    nom = request.args.get("nom")
+    age = request.args.get("age")
+
+    return render_template("index.html", nom=nom, age=age)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
