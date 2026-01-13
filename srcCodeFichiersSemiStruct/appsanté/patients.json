@@ -1,0 +1,29 @@
+{
+  "101": {
+    "nom": "Alice",
+    "age": 30,
+    "date_entree": "2026-01-10",
+    "maladie": "Diabète",
+    "comorbidites": true,
+    "traitement": "Metformine",
+    "groupe_sanguin": "A+"
+  },
+  "102": {
+    "nom": "Bob",
+    "age": 40,
+    "date_entree": "2026-01-12",
+    "maladie": "Hypertension",
+    "comorbidites": false,
+    "traitement": "Amlodipine",
+    "groupe_sanguin": "B-"
+  },
+  "103": {
+    "nom": "Erica",
+    "age": 23,
+    "date_entree": "2026-01-13",
+    "maladie": "Asthme",
+    "comorbidites": false,
+    "traitement": null,
+    "groupe_sanguin": "O+"
+  }
+}
