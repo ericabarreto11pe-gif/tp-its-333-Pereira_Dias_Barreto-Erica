@@ -1,0 +1,140 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Gestion Groupes & Étudiants",
+    "description": "API Flask avec JWT, SQLAlchemy et Swagger UI",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5001",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Token (coller le token directement)"
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Authentification",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "credentials",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "password": { "type": "string" }
+              },
+              "required": ["username", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JWT Token retourné",
+            "schema": {
+              "type": "object",
+              "properties": { "token": { "type": "string" } }
+            }
+          },
+          "401": { "description": "Identifiants invalides" }
+        }
+      }
+    },
+    "/groupes": {
+      "get": {
+        "summary": "Liste des groupes",
+        "responses": {
+          "200": {
+            "description": "Liste des groupes",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nom": { "type": "string" },
+                  "etudiants": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Créer un groupe",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "groupe",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": { "nom": { "type": "string" } },
+              "required": ["nom"]
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Groupe créé" },
+          "401": { "description": "Token invalide ou manquant" }
+        }
+      }
+    },
+    "/etudiants": {
+      "get": {
+        "summary": "Liste des étudiants",
+        "responses": {
+          "200": {
+            "description": "Liste des étudiants",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nom": { "type": "string" },
+                  "groupe": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Créer un étudiant",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "etudiant",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nom": { "type": "string" },
+                "groupe_nom": { "type": "string" }
+              },
+              "required": ["nom", "groupe_nom"]
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Étudiant ajouté" },
+          "401": { "description": "Token invalide ou manquant" },
+          "404": { "description": "Groupe non trouvé" }
+        }
+      }
+    }
+  }
+}

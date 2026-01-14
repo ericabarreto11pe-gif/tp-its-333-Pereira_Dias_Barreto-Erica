@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  person-service:
+    build: ./person-service
+    container_name: person-service
+    ports:
+      - "5001:5001"
+    networks:
+      - micro-net
+
+  health-service:
+    build: ./health-service
+    container_name: health-service
+    ports:
+      - "5002:5002"
+    networks:
+      - micro-net
+    depends_on:
+      - person-service
+
+networks:
+  micro-net:
+    driver: bridge

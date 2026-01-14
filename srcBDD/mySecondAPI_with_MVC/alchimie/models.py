@@ -1,29 +1,36 @@
 from flask_sqlalchemy import SQLAlchemy
 
-# ⚡ on initialise seulement, app viendra après
 db = SQLAlchemy()
 
 class Groupe(db.Model):
-    __tablename__ = "group"
+    __tablename__ = "groupe"
+    nom = db.Column(db.String(50), primary_key=True)
 
-    id = db.Column(db.Integer, primary_key=True)
-    nom = db.Column(db.String(50), nullable=False)
-
-    # Relation 1 → N
-    etudiants = db.relationship('Etudiant', backref='groupe', lazy=True)
+    etudiants = db.relationship("Etudiant", backref="groupe", lazy=True)
 
     def __repr__(self):
         return f"<Groupe {self.nom}>"
 
+    def to_dict(self):
+        return {
+            "nom": self.nom,
+            "etudiants": [e.nom for e in self.etudiants]
+        }
+
 class Etudiant(db.Model):
     __tablename__ = "etudiant"
-
-    id = db.Column(db.Integer, primary_key=True)
-    nom = db.Column(db.String(50), nullable=False)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+    nom = db.Column(db.String(50), primary_key=True)
+    groupe_nom = db.Column(db.String(50), db.ForeignKey("groupe.nom"))
 
     def __repr__(self):
         return f"<Etudiant {self.nom}>"
+
+    def to_dict(self):
+        return {
+            "nom": self.nom,
+            "groupe": self.groupe.nom if self.groupe else None
+        }
+
 
 
 
